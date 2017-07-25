@@ -32,82 +32,83 @@ Every thread has assigned two vector positions.
 
 ## Pseudocode
 
-### initialization()
-		// Init all threads.
-		for (every_thread_index T) do
-				is_finished[T] = 0
+### initialization()
+
+	// Init all threads.
+	for (every_thread_index T) do
+		is_finished[T] = 0
 ---
 
 
 ### first_odd_thread_pseudocode()
 thread index == 1, special case
 
-		is_finished[T] = 0
-		is_ordered = check_order()
+	is_finished[T] = 0
+	is_ordered = check_order()
 
-		if (!is_ordered)
-				swap()
-				wake(thread T+1)
-				wait_till(is_finished[T+1] = 0)
+	if (!is_ordered)
+		swap()
+		wake(thread T+1)
+		wait_till(is_finished[T+1] = 0)
 
-		is_finished[T] = 1
-		sleep(T)
+	is_finished[T] = 1
+	sleep(T)
 ---
 
 
 ### odd_thread_pseudocode()
 thread index > 0
 
-		is_finished[T] = 0  // begin
-		is_ordered = check_order()
+	is_finished[T] = 0  // begin
+	is_ordered = check_order()
 
-		if (!is_ordered)
-				swap()
-				wake(thread T-1)
-				wake(thread T+1)
-				wait_till(is_finished[T-1] = 0)
-				wait_till(is_finished[T+1] = 0)
+	if (!is_ordered)
+		swap()
+		wake(thread T-1)
+		wake(thread T+1)
+		wait_till(is_finished[T-1] = 0)
+		wait_till(is_finished[T+1] = 0)
 
-		is_finished[T] = 1
-		sleep(T)
+	is_finished[T] = 1
+	sleep(T)
 ---
 
 
 ### pair_thread_pseudocode()
 
-		is_finished[T] = 0
+	is_finished[T] = 0
 
-		// Wait till both parent threads are finished, to guarantee every PAIR thread
-		// is executed at least 1 time and are synchronized.
-		// There could be another better synchronization tool.
-		wait_till(is_finished[T-1] = 1)
-		wait_till(is_finished[T+1] = 1)
+	// Wait till both parent threads are finished, to guarantee every PAIR thread
+	// is executed at least 1 time and are synchronized.
+	// There could be another better synchronization tool.
+	wait_till(is_finished[T-1] = 1)
+	wait_till(is_finished[T+1] = 1)
 
-		is_ordered = check_order()
+	is_ordered = check_order()
 
-		if (!is_ordered)
-				swap()
-				wake(thread T-1)
-				wake(thread T+1)
-				wait_till(is_finished[T-1] = 0)
-				wait_till(is_finished[T+1] = 0)
+	if (!is_ordered)
+		swap()
+		wake(thread T-1)
+		wake(thread T+1)
+		wait_till(is_finished[T-1] = 0)
+		wait_till(is_finished[T+1] = 0)
 
-		is_finished[T] = 1
-		sleep(T)
+	is_finished[T] = 1
+	sleep(T)
 ---
 
 
 ### control_thread_pseudocode()
 
-		// Check if the whole 'is_finished' vector is true (1).
-		// This could be done with a built-in primitive that seeks a false (0) value,
-		// and return false if the whole vector has true (1) values.
-		all_true = true
+	// Check if the whole 'is_finished' vector is true (1).
+	// This could be done with a built-in primitive that seeks a false (0) value,
+	// and return false if the whole vector has true (1) values.
+	all_true = true
 
-		for (every_thread_index T) do
-				if (is_finished[T] == 0)
-						all_true = false
+	for (every_thread_index T) do
+		if (is_finished[T] == 0)
+			all_true = false
 
-		if (all_true == true)
-				finish_sort()  // end
+	if (all_true == true)
+		finish_sort()  // end
 ---
