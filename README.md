@@ -1,7 +1,7 @@
 # Parallelized Oscillatory-Sort Algorithm
 #### by Jorge R. Podjarny
 
-This algorithm is a Bubble Sort variation with parallelization factibility.
+This algorithm is a <a href="https://en.wikipedia.org/wiki/Bubble_sort">Bubble Sort</a> variation with parallelization factibility.
 Was published in 1981.
 
 The idea is to program it at low level, using *compare()* and *swap()* GPU
