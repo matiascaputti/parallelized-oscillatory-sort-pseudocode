@@ -74,11 +74,11 @@ thread index > 0
 ---
 
 
-### pair_thread_pseudocode()
+### even_thread_pseudocode()
 
 	is_finished[T] = 0
 
-	// Wait till both parent threads are finished, to guarantee every PAIR thread
+	// Wait till both parent threads are finished, to guarantee every EVEN thread
 	// is executed at least 1 time and are synchronized.
 	// There could be another better synchronization tool.
 	wait_till(is_finished[T-1] = 1)
